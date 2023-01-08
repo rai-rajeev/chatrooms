@@ -42,15 +42,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children:[
                     ClipOval(
                       child: Material(
-                        child: Ink.image(
+                        child: Image(
                           image:user!.ImagePath.contains('https://')? NetworkImage(user!.ImagePath):FileImage(File(user!.ImagePath)) as ImageProvider,
                           fit:BoxFit.cover ,
                           width: 200,
                           height: 200,
-                          child: InkWell(onTap: ()async{
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context)=>EditCreateProfileScreen()));
-                          },),),
+                      ),
                       ),
                     ),
                     Positioned(
@@ -64,8 +61,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(15),
                               color: Colors.lightBlue,
-                              child: const Icon(
-                                Icons.edit
+                              child:  IconButton(
+                                onPressed: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context)=>EditCreateProfileScreen()));
+                                },
+                                icon: const Icon(
+                                  Icons.edit
+                                ),
                               ),
                             ),
                           ),

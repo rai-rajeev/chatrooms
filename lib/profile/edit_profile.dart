@@ -48,7 +48,7 @@ class _EditCreateProfileScreenState extends State<EditCreateProfileScreen> {
                     ClipOval(
                       child: Material(
                         color: Colors.red,
-                        child: Ink.image(
+                        child: Image(
                           image: _user.ImagePath.contains('https://')
                               ? NetworkImage(_user.ImagePath)
                               : FileImage(File(
@@ -57,209 +57,8 @@ class _EditCreateProfileScreenState extends State<EditCreateProfileScreen> {
                           width: 200,
                           height: 200,
 
-                          child: InkWell(onTap: () async {
-                            showModalBottomSheet(context: context,
-                                builder: (context) {
-                                  return SizedBox(
-                                    height: 300,
-                                    child: Column(
-                                      children: [
-                                        Container(
 
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 35, horizontal: 25),
-                                            child: Row(
-                                              children: [
-                                                const Flexible(
-                                                  child: SizedBox(
-                                                    width: 450,
-                                                    child: Text('Profile photo',
-                                                      style: TextStyle(
-                                                          fontSize: 36,
-                                                          fontWeight: FontWeight
-                                                              .w600
-                                                      ),),
-                                                  ),
-                                                ),
-                                                !(_user.ImagePath.contains(
-                                                    'https://')) ? IconButton(
-                                                    onPressed: () {
-                                                      _user = User(
-                                                          UserName: _user
-                                                              .UserName,
-                                                          ImagePath: 'https://th.bing.com/th/id/OIP.mzIOKRfWXfNzyzjURPQckAHaHa?w=161&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7');
-                                                      setState(() {
-
-                                                      });
-                                                    },
-                                                    icon: const Icon(Icons.delete,
-                                                      size: 32,))
-                                                    : Container()
-
-                                              ],
-                                            ),
-                                          ),
-
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                padding: const EdgeInsets.all(20),
-                                                height: 170,
-                                                child: Column(
-                                                  children: [
-                                                    const Spacer(),
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .all(8.0),
-
-                                                      child: ClipOval(
-                                                        child: Container(
-                                                          color: Colors.grey,
-                                                          padding: const EdgeInsets
-                                                              .all(2),
-                                                          child: ClipOval(
-                                                            child: Container(
-                                                              padding: const EdgeInsets
-                                                                  .all(14),
-                                                              color: Colors
-                                                                  .white,
-                                                              child: IconButton(
-                                                                  onPressed: () async {
-                                                                    final imagecam = await ImagePicker()
-                                                                        .pickImage(
-                                                                        source: ImageSource
-                                                                            .camera,
-                                                                        preferredCameraDevice: CameraDevice
-                                                                            .front);
-                                                                    if (imagecam ==
-                                                                        null) {
-                                                                      return;
-                                                                    }
-                                                                    final directory = await getApplicationDocumentsDirectory();
-                                                                    final name = basename(
-                                                                        imagecam
-                                                                            .path);
-                                                                    final imagefile = File(
-                                                                        '${directory
-                                                                            .path}/$name');
-                                                                    final NewImage = await File(
-                                                                        imagecam
-                                                                            .path)
-                                                                        .copy(
-                                                                        imagefile
-                                                                            .path);
-                                                                    setState(() {
-                                                                      _user =
-                                                                          User(
-                                                                              UserName: _user
-                                                                                  .UserName,
-                                                                              ImagePath: NewImage
-                                                                                  .path);
-                                                                    });
-                                                                  },
-                                                                  icon: const Icon(
-                                                                    Icons
-                                                                        .camera_alt,
-                                                                    size: 36,)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const Text('Camera',
-                                                      style: TextStyle(
-                                                          fontSize: 28
-                                                      ),)
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.all(20),
-                                                height: 170,
-                                                child: Column(
-                                                  children: [
-                                                    const Spacer(),
-                                                    ClipOval(
-                                                      child: Container(
-                                                        padding: const EdgeInsets
-                                                            .all(2.0),
-
-                                                        color: Colors.grey,
-
-                                                        child: ClipOval(
-                                                          child: Container(
-                                                            padding: const EdgeInsets
-                                                                .all(14),
-                                                            color: Colors.white,
-                                                            child: IconButton(
-                                                                onPressed: () async {
-                                                                  final imagegal = await ImagePicker()
-                                                                      .pickImage(
-                                                                      source: ImageSource
-                                                                          .gallery);
-                                                                  if (imagegal ==
-                                                                      null) {
-                                                                    return;
-                                                                  }
-                                                                  final directory = await getApplicationDocumentsDirectory();
-                                                                  final name = basename(
-                                                                      imagegal
-                                                                          .path);
-                                                                  final imagefile = File(
-                                                                      '${directory
-                                                                          .path}/$name');
-                                                                  final NewImage = await File(
-                                                                      imagegal
-                                                                          .path)
-                                                                      .copy(
-                                                                      imagefile
-                                                                          .path);
-                                                                  setState(() {
-                                                                    _user =
-                                                                        User(
-                                                                            UserName: _user
-                                                                                .UserName,
-                                                                            ImagePath: NewImage
-                                                                                .path);
-                                                                  });
-                                                                },
-                                                                icon: const Icon(
-                                                                  Icons.photo,
-                                                                  size: 36,)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const Text('Gallery',
-                                                      style: TextStyle(
-                                                          fontSize: 28
-                                                      ),)
-                                                  ],
-                                                ),
-                                              )
-
-                                            ],
-                                          ),
-                                        ),
-
-                                      ],
-                                    ),
-                                  );
-                                  //   Scaffold(
-                                  //   appBar: AppBar(
-                                  //
-                                  //     actions:  [
-                                  //
-                                  //     ],
-                                  //     title:
-                                  //   ),
-                                  //   body:
-                                  // );
-                                });
-                          },),),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -273,9 +72,206 @@ class _EditCreateProfileScreenState extends State<EditCreateProfileScreen> {
                             child: Container(
                               padding: const EdgeInsets.all(15),
                               color: Colors.lightBlue,
-                              child: const Icon(
-                                Icons.add_a_photo,
-                                size: 30,
+                              child: IconButton(
+                                onPressed: ()async{
+                                  showModalBottomSheet(context: context,
+                                      builder: (context) {
+                                        return SizedBox(
+                                          height: 300,
+                                          child: Column(
+                                            children: [
+                                              Container(
+
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(
+                                                      vertical: 35, horizontal: 25),
+                                                  child: Row(
+                                                    children: [
+                                                      const Flexible(
+                                                        child: SizedBox(
+                                                          width: 450,
+                                                          child: Text('Profile photo',
+                                                            style: TextStyle(
+                                                                fontSize: 36,
+                                                                fontWeight: FontWeight
+                                                                    .w600
+                                                            ),),
+                                                        ),
+                                                      ),
+                                                      !(_user.ImagePath.contains(
+                                                          'https://')) ? IconButton(
+                                                          onPressed: () {
+                                                            _user = User(
+                                                                UserName: _user
+                                                                    .UserName,
+                                                                ImagePath: 'https://th.bing.com/th/id/OIP.mzIOKRfWXfNzyzjURPQckAHaHa?w=161&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7');
+                                                            setState(() {
+
+                                                            });
+                                                          },
+                                                          icon: const Icon(Icons.delete,
+                                                            size: 32,))
+                                                          : Container()
+
+                                                    ],
+                                                  ),
+                                                ),
+
+                                              ),
+                                              Container(
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      padding: const EdgeInsets.all(20),
+                                                      height: 170,
+                                                      child: Column(
+                                                        children: [
+                                                          const Spacer(),
+                                                          Padding(
+                                                            padding: const EdgeInsets
+                                                                .all(8.0),
+
+                                                            child: ClipOval(
+                                                              child: Container(
+                                                                color: Colors.grey,
+                                                                padding: const EdgeInsets
+                                                                    .all(2),
+                                                                child: ClipOval(
+                                                                  child: Container(
+                                                                    padding: const EdgeInsets
+                                                                        .all(14),
+                                                                    color: Colors
+                                                                        .white,
+                                                                    child: IconButton(
+                                                                        onPressed: () async {
+                                                                          final imagecam = await ImagePicker()
+                                                                              .pickImage(
+                                                                              source: ImageSource
+                                                                                  .camera,
+                                                                              preferredCameraDevice: CameraDevice
+                                                                                  .front);
+                                                                          if (imagecam ==
+                                                                              null) {
+                                                                            return;
+                                                                          }
+                                                                          final directory = await getApplicationDocumentsDirectory();
+                                                                          final name = basename(
+                                                                              imagecam
+                                                                                  .path);
+                                                                          final imagefile = File(
+                                                                              '${directory
+                                                                                  .path}/$name');
+                                                                          final NewImage = await File(
+                                                                              imagecam
+                                                                                  .path)
+                                                                              .copy(
+                                                                              imagefile
+                                                                                  .path);
+                                                                          setState(() {
+                                                                            _user =
+                                                                                User(
+                                                                                    UserName: _user
+                                                                                        .UserName,
+                                                                                    ImagePath: NewImage
+                                                                                        .path);
+                                                                          });
+                                                                        },
+                                                                        icon: const Icon(
+                                                                          Icons
+                                                                              .camera_alt,
+                                                                          size: 36,)),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const Text('Camera',
+                                                            style: TextStyle(
+                                                                fontSize: 28
+                                                            ),)
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding: const EdgeInsets.all(20),
+                                                      height: 170,
+                                                      child: Column(
+                                                        children: [
+                                                          const Spacer(),
+                                                          ClipOval(
+                                                            child: Container(
+                                                              padding: const EdgeInsets
+                                                                  .all(2.0),
+
+                                                              color: Colors.grey,
+
+                                                              child: ClipOval(
+                                                                child: Container(
+                                                                  padding: const EdgeInsets
+                                                                      .all(14),
+                                                                  color: Colors.white,
+                                                                  child: IconButton(
+                                                                      onPressed: () async {
+                                                                        final imagegal = await ImagePicker()
+                                                                            .pickImage(
+                                                                            source: ImageSource
+                                                                                .gallery);
+                                                                        if (imagegal ==
+                                                                            null) {
+                                                                          return;
+                                                                        }
+                                                                        final directory = await getApplicationDocumentsDirectory();
+                                                                        final name = basename(
+                                                                            imagegal
+                                                                                .path);
+                                                                        final imagefile = File(
+                                                                            '${directory
+                                                                                .path}/$name');
+                                                                        final NewImage = await File(
+                                                                            imagegal
+                                                                                .path)
+                                                                            .copy(
+                                                                            imagefile
+                                                                                .path);
+                                                                        setState(() {
+                                                                          _user =
+                                                                              User(
+                                                                                  UserName: _user
+                                                                                      .UserName,
+                                                                                  ImagePath: NewImage
+                                                                                      .path);
+                                                                        });
+                                                                      },
+                                                                      icon: const Icon(
+                                                                        Icons.photo,
+                                                                        size: 36,)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const Text('Gallery',
+                                                            style: TextStyle(
+                                                                fontSize: 28
+                                                            ),)
+                                                        ],
+                                                      ),
+                                                    )
+
+                                                  ],
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        );
+
+
+                                      });
+                                },
+                                icon: const Icon(
+                                  Icons.add_a_photo,
+                                  size: 30,
+                                ),
                               ),
                             ),
                           ),
@@ -417,13 +413,10 @@ class _EditCreateProfileScreenState extends State<EditCreateProfileScreen> {
               {'SendBy':controller.text}).catchError((e){
              debugPrint(e);
           });
-          debugPrint('true');
-          debugPrint(element.id);
+
 
        }
-       else {
-         debugPrint('false');
-       }
+
      }}
   }
 }

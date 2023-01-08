@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../model/message.dart';
 
-Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<Message>> Streamchat,User user,){
+Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<Message>> Streamchat,User user,ScrollController lisko){
   String? nulldoc;
 
   return  Container(
@@ -23,12 +23,10 @@ Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<M
         ),
         Flexible(
           child: StreamBuilder<List<Message>>(
-              stream: Streamchat,
-              builder: (context, snapshot) {
+              stream:Streamchat,
+              builder: ( context, snapshot) {
                 if(snapshot.data==null){
-                  return Center(
-                    child: Text('Something went wrong !${snapshot.error}'),
-                  );
+                  return Text('Something went wrong !${snapshot.error}');
                 }
                 else if(snapshot.connectionState==ConnectionState.waiting){
                   return const Center(
@@ -43,6 +41,9 @@ Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<M
                   final messages = snapshot.data!;
 
                   return ListView(
+                    controller:lisko ,
+
+
                     children: messages.map((message)=>
                         Container(
 
@@ -55,18 +56,19 @@ Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<M
                                 padding: const EdgeInsets.only(right: 15,
                                   top: 10,left: 10),
                                 child: Container(
+                                  width: (message.mes.length<24)?null:205,
                                     padding: const EdgeInsets.only(left: 4,top: 6,bottom: 6),
 
                                     decoration: BoxDecoration(
                                       color: (user.UserName==message.SendBy)?Colors.lightGreen:Colors.white,
-                                      borderRadius:(user.UserName==message.SendBy)? BorderRadius.only(topLeft: Radius.circular(25),bottomLeft: Radius.circular(25),bottomRight: Radius.circular(10)):
+                                      borderRadius:(user.UserName==message.SendBy)? const BorderRadius.only(topLeft: Radius.circular(25),bottomLeft: Radius.circular(25),bottomRight: Radius.circular(10)):
                                       const BorderRadius.only(topRight: Radius.circular(25),bottomLeft: Radius.circular(25),bottomRight: Radius.circular(10)),
                                     ),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Container(
-                                          child: Padding(padding: EdgeInsets.all(5),
+                                          child: Padding(padding: const EdgeInsets.all(5),
                                             child: Text(message.SendBy,
                                               style: TextStyle(
                                                   fontSize: 24,
@@ -81,18 +83,22 @@ Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<M
                                         ),
                                         Container(
                                           padding: const EdgeInsets.all(2),
-                                          child: Text(message.mes,
-                                            style: const TextStyle(
-                                              fontSize: 20,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(message.mes,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
 
-                                            ),
+                                                ),
+
+                                              ),
+                                              Text('${message.SentTime.hour}:${message.SentTime.minute.toInt()~/10}${message.SentTime.minute.toInt()%10}',
+                                                textAlign: TextAlign.end,)
+                                            ],
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 120),
-                                          child: Text('${message.SentTime.hour}:${message.SentTime.minute.toInt()~/10}${message.SentTime.minute.toInt()%10}',
-                                            textAlign: TextAlign.end,),
-                                        )
+
                                       ],
                                     )
 
