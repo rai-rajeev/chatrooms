@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../model/message.dart';
 
-Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<Message>> Streamchat,User user,ScrollController lisko){
+Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<Message>> Streamchat,User user,){
   String? nulldoc;
 
   return  Container(
@@ -25,7 +25,7 @@ Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<M
           child: StreamBuilder<List<Message>>(
               stream:Streamchat,
               builder: ( context, snapshot) {
-                if(snapshot.data==null){
+                if(snapshot.hasError){
                   return Text('Something went wrong !${snapshot.error}');
                 }
                 else if(snapshot.connectionState==ConnectionState.waiting){
@@ -34,14 +34,16 @@ Widget BuildPage(TextEditingController chatcontroller,String title,Stream<List<M
                   );
                 }
                 else if(snapshot.data==null){
-                  nulldoc= FirebaseFirestore.instance.collection(title).doc().id;
-                  return Center(child: Container(padding: EdgeInsets.all(15),));
+                  nulldoc=   FirebaseFirestore.instance.collection(title).doc().id;
+                  return Center(child: Container(
+                    padding: EdgeInsets.all(15),
+                  ));
                 }
                 else {
                   final messages = snapshot.data!;
 
                   return ListView(
-                    controller:lisko ,
+
 
 
                     children: messages.map((message)=>

@@ -48,15 +48,10 @@ class _ChatroompageState extends State<Chatroompage> {
       .collection(collection).snapshots()
       .map((snapshot) => snapshot
       .docs.map((doc) => Message.Fromjson(doc.data())).toList());
- final ScrollController listconto=ScrollController();
- void _scrollDown(){
-   listconto.jumpTo(listconto.position.maxScrollExtent);
- }
- // @override
- // void initState(){
- //   super.initState();
- //   _scrollDown();
- // }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +84,12 @@ class _ChatroompageState extends State<Chatroompage> {
                         });
                           },
                         children: [
-                          BuildPage( _ChatControllerMusic, _chatrooms[0], ReadMessage(_chatrooms[0]), _user,listconto),
-                          BuildPage( _ChatControllerTravel, _chatrooms[1], ReadMessage(_chatrooms[1]), _user,listconto),
-                          BuildPage( _ChatControllerPhotography, _chatrooms[2], ReadMessage(_chatrooms[2]), _user,listconto),
-                          BuildPage( _ChatControllerStudy, _chatrooms[3], ReadMessage(_chatrooms[3]), _user,listconto),
-                          BuildPage( _ChatControllerMovie, _chatrooms[4], ReadMessage(_chatrooms[4]), _user,listconto),
-                          BuildPage( _ChatControllerLanguage, _chatrooms[5], ReadMessage(_chatrooms[5]), _user,listconto),
+                          BuildPage( _ChatControllerMusic, _chatrooms[0], ReadMessage(_chatrooms[0]), _user,),
+                          BuildPage( _ChatControllerTravel, _chatrooms[1], ReadMessage(_chatrooms[1]), _user,),
+                          BuildPage( _ChatControllerPhotography, _chatrooms[2], ReadMessage(_chatrooms[2]), _user,),
+                          BuildPage( _ChatControllerStudy, _chatrooms[3], ReadMessage(_chatrooms[3]), _user,),
+                          BuildPage( _ChatControllerMovie, _chatrooms[4], ReadMessage(_chatrooms[4]), _user,),
+                          BuildPage( _ChatControllerLanguage, _chatrooms[5], ReadMessage(_chatrooms[5]), _user,),
 
 
       //
@@ -172,7 +167,7 @@ class _ChatroompageState extends State<Chatroompage> {
                                                         ),
                                                         onTap: (){
                                                           setState(() {
-                                                            listconto.jumpTo(listconto.position.maxScrollExtent);
+
 
                                                             SelectedIndex=index;
                                                             _pageController.jumpToPage(index);

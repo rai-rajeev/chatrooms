@@ -351,6 +351,7 @@ class _EditCreateProfileScreenState extends State<EditCreateProfileScreen> {
                            try{
                               await updateUserName(_user, _UsernameController);
                              _user = User(UserName: username,
+                               ImagePath: _user.ImagePath,
 
                              );
                              SharedPreferences prefs = await SharedPreferences
